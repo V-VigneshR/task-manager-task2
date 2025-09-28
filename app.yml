@@ -1,0 +1,40 @@
+# app.yaml - Updated for AWS ECR
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-manager
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: task-manager
+  template:
+    metadata:
+      labels:
+        app: task-manager
+    spec:
+      containers:
+        - name: task-manager
+          image: 975050195505.dkr.ecr.us-east-1.amazonaws.com/task-manager-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_HOST
+              value: "mongodb-service"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_DATABASE
+              value: "taskmanager"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-manager-service
+spec:
+  selector:
+    app: task-manager
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer  # Changed to LoadBalancer for AWS
