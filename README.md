@@ -117,7 +117,6 @@ curl http://$LOADBALANCER_URL/api/v1/tasks/eks-test-1
 
 
 # OUTPUT SCREENSHOTS
-## Architecture Diagram
 
 ![one](Output/one.png)
 ![two](Output/two.png)
